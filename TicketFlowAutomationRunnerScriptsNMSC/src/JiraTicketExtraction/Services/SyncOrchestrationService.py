@@ -18,7 +18,9 @@ class SyncOrchestrationService:
         configuredJql: str = EnvironmentUtility.Current.GetJiraJql()
         jql: str = self._BuildJql(configuredJql, lastSyncedAt)
 
-        fetchedTickets: list[SyncedTicket] = self._JiraExtractionService.FetchIssuesMatching(jql)
+        with ConsoleTableUtility.Current.Status("Fetching tickets from Jira..."):
+            fetchedTickets: list[SyncedTicket] = self._JiraExtractionService.FetchIssuesMatching(jql)
+
         ConsoleTableUtility.Current.PrintTickets(fetchedTickets)
 
         latestUpdatedAt: str | None = lastSyncedAt

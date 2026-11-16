@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Any, ClassVar
 
 from rich.console import Console
+from rich.status import Status
 from rich.table import Table
 
 from JiraTicketExtraction.Models.SyncedTicket import SyncedTicket
@@ -15,6 +16,9 @@ class ConsoleTableUtility:
 
     def __init__(self) -> None:
         self._Console: Console = Console()
+
+    def Status(self, message: str) -> Status:
+        return self._Console.status(message, spinner="dots")
 
     def PrintTickets(self, tickets: list[SyncedTicket]) -> None:
         if not tickets:
